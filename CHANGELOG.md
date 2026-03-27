@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.0 — 2026-03-26
+
+- `--format mermaid` in `/onboard trail`: interactive diagram with color coding by task status (green/blue/red), click handlers linking to task files, and subgraphs grouping completed vs open tasks
+- docguard integration in `/onboard explain`: displays quality score and failing criteria before the explanation, integrated into the explanation body per developer level
+- New hook `before-implement`: automatically tracks `spec-aware` badge by checking whether the developer has read all specs before starting implementation; displays a non-blocking advisory if specs are unread
+
 ## 1.0.0 — 2026-03-26
 
 - Initial release
