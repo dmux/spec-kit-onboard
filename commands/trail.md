@@ -78,18 +78,60 @@ Rules for the task tree:
 
 **If `--format mermaid`:**
 
-Generate a Mermaid diagram in the following format:
+Generate an interactive Mermaid diagram with color coding, click handlers, and subgraphs.
 
-```mermaid
-graph TD
-  T001["T-001 · [title] ✓"] --> T002["T-002 · [title] ✓"]
-  T002 --> T003["T-003 · [title]"]
-  T003 --> T004["T-004 · [title]"]
+**Color coding by task status:**
+
+- Completed tasks: green fill (`style T001 fill:#22c55e,color:#fff`)
+- Next unblocked task: blue fill (`style T003 fill:#3b82f6,color:#fff`)
+- Blocked tasks: red fill (`style T004 fill:#ef4444,color:#fff`)
+- Open tasks (not next, not blocked): default style
+
+**Click handlers:** add a `click` directive for each task linking to its position in `features/<feature>/tasks.md`:
+
+```text
+click T003 "features/<feature>/tasks.md" "View task"
 ```
 
+**Subgraphs:** group tasks by status using `subgraph` blocks:
+
+```mermaid
+flowchart TD
+  subgraph done["✓ Completed"]
+    T001["T-001 · [title]"]
+    T002["T-002 · [title]"]
+  end
+
+  subgraph open["○ Open"]
+    T003["T-003 · [title] ← next"]
+    T004["T-004 · [title] 🔒 blocked"]
+    T005["T-005 · [title] 🔒 blocked"]
+  end
+
+  T001 --> T002
+  T002 --> T003
+  T003 --> T004
+  T003 --> T005
+
+  style T001 fill:#22c55e,color:#fff
+  style T002 fill:#22c55e,color:#fff
+  style T003 fill:#3b82f6,color:#fff
+  style T004 fill:#ef4444,color:#fff
+  style T005 fill:#ef4444,color:#fff
+
+  click T003 "features/<feature>/tasks.md" "View task"
+  click T004 "features/<feature>/tasks.md" "View task"
+  click T005 "features/<feature>/tasks.md" "View task"
+```
+
+**Generation rules:**
+
+- Use `flowchart TD` (not `graph TD`) for better layout support.
+- Tasks with no dependencies are placed outside subgraphs if they don't fit logically.
+- Cross-feature dependencies: add a separate node `EXT_feat["features/[other-feature]"]` with a dashed arrow: `EXT_feat -. depends on .-> T001`.
+- If a feature has only one task, omit subgraphs and generate a single flat diagram.
+
 Include the diagram inside a markdown code block with the `mermaid` tag.
-Completed tasks get `✓` in their label.
-Tasks with no dependencies are free nodes (no incoming arrows).
 
 ### Step 5 — Save the file
 

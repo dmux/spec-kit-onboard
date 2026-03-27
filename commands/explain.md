@@ -69,7 +69,32 @@ Calibrate the explanation to the profile `level`:
 - Mention only what is non-obvious.
 
 **Integration with docguard (if installed):**
-If `docguard` is listed in `.speckit/extensions.json` and the target is a spec, include at the end: "docguard score: [score]/100. Failing criteria: [list]." — if the score is not accessible, omit this block.
+
+If `docguard` is listed in `.speckit/extensions.json` and the target is a spec file (type A or B):
+
+1. Read the docguard score for the spec. The score is typically stored in `.speckit/docguard/<feature>.json` or equivalent — check the docguard extension's output path.
+2. Display the quality block **before** the explanation body:
+
+```text
+  docguard score: [score]/100
+  [if score < 80:]
+  Criteria not met:
+    ✗ [criterion name] — [brief description of what's missing]
+    ✗ [criterion name] — [brief description]
+  [if score >= 80:]
+  All major criteria met.
+```
+
+<!-- list continues after code block -->
+
+1. Integrate the failing criteria into the explanation itself:
+   - For `junior`: explain in plain language why each failing criterion matters and how to fix it.
+   - For `mid`: reference the failing criteria as "things to address before implementing."
+   - For `senior`: list failing criteria as a brief checklist at the end of the explanation.
+
+1. If the docguard score file cannot be read, display: `docguard: score unavailable` and continue with the explanation.
+
+If `docguard` is **not** installed, omit this block entirely.
 
 ### Step 4 — Mandatory closing
 
