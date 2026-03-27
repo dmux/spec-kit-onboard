@@ -103,7 +103,41 @@ With the selected task, generate the briefing:
 - `mid`: direct technical language. Focuses on what is non-obvious.
 - `senior`: 1–2 line summary per section. Omits anything trivial.
 
-### Step 5 — Closing question
+### Step 5 — Tracker integration (if installed)
+
+Check `.speckit/extensions.json` for `jira` or `azure-devops` extensions.
+
+**If `jira` is installed:**
+
+1. Look up the Jira issue linked to the suggested task. The link is declared in the task metadata as `jira: <issue-key>` (e.g., `jira: AUTH-42`) or inferred from the task title.
+2. If a linked issue is found, append to the briefing:
+
+```text
+  Jira: [issue-key] — [issue summary]
+  Status: [jira status]  |  Assignee: [assignee or "unassigned"]
+  → [issue URL]
+```
+
+1. If the task has no linked issue, append: `Jira: no linked issue found for this task.`
+1. If the Jira extension cannot be reached, append: `Jira: integration unavailable.` and continue.
+
+**If `azure-devops` is installed:**
+
+1. Look up the Azure DevOps work item linked to the suggested task. The link is declared in the task metadata as `ado: <item-id>` (e.g., `ado: 1234`) or inferred from the task title.
+2. If a linked item is found, append to the briefing:
+
+```text
+  Azure DevOps: [item-id] — [item title]
+  State: [state]  |  Assigned to: [assignee or "unassigned"]
+  → [item URL]
+```
+
+1. If the task has no linked item, append: `Azure DevOps: no linked work item found for this task.`
+1. If the extension cannot be reached, append: `Azure DevOps: integration unavailable.` and continue.
+
+**If neither is installed:** skip this step entirely.
+
+### Step 6 — Closing question
 
 Always end with:
 
