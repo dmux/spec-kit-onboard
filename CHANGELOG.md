@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.0 — 2026-03-26
+
+- Added `extension.yml` manifest in the spec-kit community extension format (schema v1.0)
+- Added `catalog-entry.json` for submission to the spec-kit community catalog
+- Added `.extensionignore` to exclude development-only files from extension packages
+- Renamed `LICENSE.md` to `LICENSE` to comply with community publishing requirements
+- `extension.json` retained for backwards compatibility with spec-kit v1.x installations
+
 ## 2.0.0 — 2026-03-26
 
 - **Interactive quiz mode**: new `after-explain` hook suggests `/onboard quiz` automatically at the right moment (after reading ≥ 3 artifacts, after reading all specs of a feature, or after 7 days since last quiz) — no need to type the command manually

@@ -1,0 +1,55 @@
+schema_version: "1.0"
+extension:
+  id: "onboard"
+  name: "Onboard"
+  version: "2.1.0"
+  description: "Contextual onboarding and progressive growth for developers new to spec-kit projects. Explains specs, maps dependencies, validates understanding, and guides the next step."
+  author: "Rafael Sales"
+  repository: "https://github.com/dmux/spec-kit-onboard"
+  license: "MIT"
+  homepage: "https://github.com/dmux/spec-kit-onboard"
+requires:
+  speckit_version: ">=0.1.0"
+provides:
+  commands:
+    - name: "speckit.onboard.start"
+      file: "commands/start.md"
+      description: "Initialize onboarding and generate a personalized guide for the developer"
+    - name: "speckit.onboard.explain"
+      file: "commands/explain.md"
+      description: "Explain any spec, feature, or SDD concept calibrated to the developer level"
+    - name: "speckit.onboard.trail"
+      file: "commands/trail.md"
+      description: "Generate a dependency map for a feature with optional Mermaid diagram"
+    - name: "speckit.onboard.quiz"
+      file: "commands/quiz.md"
+      description: "Run a 5-question quiz anchored to real project artifacts to validate understanding"
+    - name: "speckit.onboard.badge"
+      file: "commands/badge.md"
+      description: "View earned badges and progress toward locked ones"
+    - name: "speckit.onboard.mentor"
+      file: "commands/mentor.md"
+      description: "Get a personalized task recommendation with contextual briefing"
+    - name: "speckit.onboard.team"
+      file: "commands/team.md"
+      description: "View aggregated progress for all developers on the project"
+hooks:
+  after_implement:
+    command: "speckit.onboard.after-implement"
+    file: "hooks/after-implement.md"
+    optional: true
+  before_implement:
+    command: "speckit.onboard.before-implement"
+    file: "hooks/before-implement.md"
+    optional: true
+  after_explain:
+    command: "speckit.onboard.after-explain"
+    file: "hooks/after-explain.md"
+    optional: true
+tags:
+  - "onboarding"
+  - "learning"
+  - "mentoring"
+  - "developer-experience"
+  - "gamification"
+  - "knowledge-transfer"
