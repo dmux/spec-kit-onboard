@@ -1,0 +1,8 @@
+spec-kit-onboard.md
+catalog-entry.json
+Makefile
+.markdownlint.json
+.extensionignore
+CLAUDE.md
+.claude/
+.git/
