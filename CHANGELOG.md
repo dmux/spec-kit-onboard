@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0 — 2026-03-26
+
+- New command `/onboard team`: aggregated view of all developer profiles in `.onboard/`; supports single and multi-profile layouts
+- `/onboard team --report`: exports full team progress report to `.onboard/team-report.md` with per-developer sections, feature coverage, gaps, and recommendations
+- `/onboard mentor` now integrates with `jira` and `azure-devops` extensions: appends linked issue/work item status and URL to the task briefing when available
+
 ## 1.1.0 — 2026-03-26
 
 - `--format mermaid` in `/onboard trail`: interactive diagram with color coding by task status (green/blue/red), click handlers linking to task files, and subgraphs grouping completed vs open tasks
