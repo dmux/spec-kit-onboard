@@ -19,12 +19,12 @@ You are executing the `/onboard quiz` command of the spec-kit-onboard extension.
 
 ### Step 1 — Read context
 
-1. Read `.onboard/profile.json`. If it does not exist, create it with default values.
+1. Read the active developer profile (see multi-developer profile resolution in `commands/start.md`). If it does not exist, create it with default values.
 2. Read project artifacts relevant to the quiz scope:
    - If `--feature` was provided: read `features/<feature>/spec.md` and `features/<feature>/tasks.md`
    - Otherwise: read spec.md and tasks.md of features with open tasks (maximum 3 features)
    - Read `.speckit/extensions.json`
-3. Note `quiz_history` to avoid repeating questions from previous sessions.
+3. Load `quiz_history` and `quiz_questions_history` from the profile to avoid repeating questions.
 
 ### Step 2 — Generate the 5 questions
 
@@ -40,8 +40,19 @@ Distribute the 5 questions among the 3 types below. Do not use more than 3 quest
 - **Simple inference** (1–2 questions): the answer requires reading two artifacts. E.g., "If T-004 depends on T-003 and T-003 is still open, what is the status of T-004?"
 - **Practical consequence** (1 question): the answer requires understanding the impact of a decision. E.g., "If you change features/users/spec.md, which other spec would need to be reviewed and why?"
 
-**Rule 3 — No repetition.**
-Check `quiz_history` in the profile. If a question covers the same artifact and topic as a previous question, replace it with another.
+**Rule 3 — No repetition across sessions.**
+Before generating each question, check `quiz_questions_history[]` in the profile. Each entry has the shape:
+
+```json
+{
+  "question_id": "sha256-of-artifact+topic",
+  "artifact": "features/auth/tasks.md",
+  "topic": "T-003 acceptance criteria",
+  "asked_on": "ISO8601"
+}
+```
+
+If a candidate question targets the same `artifact` + `topic` combination as any entry in `quiz_questions_history`, skip it and generate a different question. This guarantees no question is repeated across any number of sessions.
 
 **Rule 4 — Level calibration.**
 
@@ -117,21 +128,32 @@ If score < 3, list: `→ /onboard explain [gap artifact]` for each wrong answer.
 
 ### Step 5 — Update the profile
 
-Update `.onboard/profile.json`:
+Update the active developer profile:
 
 1. Add an entry to `quiz_history[]`:
 
 ```json
 {
   "date": "[ISO8601]",
-  "score": N,
+  "score": 0,
   "total": 5,
   "gaps": ["[topic/artifact of each wrong answer]"]
 }
 ```
 
+1. Add one entry per question to `quiz_questions_history[]`:
+
+```json
+{
+  "question_id": "[sha256-of-artifact+topic or deterministic hash]",
+  "artifact": "[artifact path or concept name]",
+  "topic": "[brief topic description, e.g. 'T-003 acceptance criteria']",
+  "asked_on": "[ISO8601]"
+}
+```
+
 1. Update `last_updated`.
-2. **Badge `navigator`:** if score == 5, move `"navigator"` from `locked` to `earned` (if not already earned).
+1. **Badge `navigator`:** if score == 5, move `"navigator"` from `locked` to `earned` (if not already earned).
 
 If `navigator` was unlocked:
 
@@ -146,4 +168,5 @@ If `navigator` was unlocked:
 1. **Never invent answers.** If an artifact could not be read, do not generate questions about it.
 2. **Feedback always references the artifact.** Every correction must cite the file (and line, if possible) where the correct answer is found.
 3. **One question at a time.** Never display all questions at once — wait for each response.
-4. **End with an action.** At the end, always suggest the next step: `/onboard mentor` or `/onboard explain <gap>`.
+4. **Question history is permanent.** Once a question is recorded in `quiz_questions_history`, it must never be asked again for that developer.
+5. **End with an action.** At the end, always suggest the next step: `/onboard mentor` or `/onboard explain <gap>`.

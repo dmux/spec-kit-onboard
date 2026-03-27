@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "2.0",
   "developer": {
     "name": "developer",
     "level": "junior",
@@ -10,8 +10,12 @@
     "explained_artifacts": [],
     "trails_generated": [],
     "quiz_history": [],
+    "quiz_questions_history": [],
+    "implementation_attempts": [],
     "mentor_suggestions_followed": 0,
-    "consecutive_mentor_follows": 0
+    "consecutive_mentor_follows": 0,
+    "last_mentor_suggestion": "",
+    "last_quiz_nudge": ""
   },
   "badges": {
     "earned": [],
