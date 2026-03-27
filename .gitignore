@@ -1,0 +1,5 @@
+# Generated onboard files in the user's project
+.onboard/
+.claude/
+CLAUDE.md
+spec-kit-onboard.md

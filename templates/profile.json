@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "developer": {
+    "name": "developer",
+    "level": "junior",
+    "onboarded_at": ""
+  },
+  "progress": {
+    "tasks_completed": [],
+    "explained_artifacts": [],
+    "trails_generated": [],
+    "quiz_history": [],
+    "mentor_suggestions_followed": 0,
+    "consecutive_mentor_follows": 0
+  },
+  "badges": {
+    "earned": [],
+    "locked": [
+      "first-read",
+      "map-reader",
+      "navigator",
+      "first-task",
+      "clean-pass",
+      "spec-aware",
+      "full-trail",
+      "mentor-streak",
+      "autonomous"
+    ]
+  },
+  "last_updated": ""
+}
