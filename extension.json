@@ -3,14 +3,14 @@
   "id": "onboard",
   "description": "Contextual onboarding and progressive growth for developers new to spec-kit projects. Explains specs, maps dependencies, validates understanding, and guides the next step.",
   "author": "Rafael Sales",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "license": "MIT",
   "requires": {
     "speckit_version": ">=0.1.0"
   },
   "provides": {
     "commands": 7,
-    "hooks": 2
+    "hooks": 3
   },
   "commands": {
     "start": "commands/start.md",
@@ -23,7 +23,8 @@
   },
   "hooks": {
     "after-implement": "hooks/after-implement.md",
-    "before-implement": "hooks/before-implement.md"
+    "before-implement": "hooks/before-implement.md",
+    "after-explain": "hooks/after-explain.md"
   },
   "tags": [
     "onboarding",

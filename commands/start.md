@@ -33,11 +33,47 @@ Read the following artifacts:
 
 If the project has no features, continue — the guide will be generated based solely on `memory.md` and installed extensions.
 
-### Step 2 — Create the developer profile
+### Step 2 — Multi-developer profile resolution
 
-Check whether `.onboard/profile.json` already exists.
+v2.0 supports multiple developers working simultaneously on the same project. Profiles are stored per-developer:
 
-- **If it does not exist:** create `.onboard/profile.json` by copying `templates/profile.json` (path relative to the extension) and filling in:
+**Profile storage layout:**
+
+```text
+.onboard/
+├── profile.json              — legacy single-developer profile (v1.x)
+└── profiles/
+    └── <normalized-name>.json — per-developer profile (v2.0+)
+```
+
+**Name normalization:** convert `--dev` value to lowercase, replace spaces with hyphens (e.g., `"Maria Silva"` → `maria-silva`).
+
+**Resolution logic:**
+
+1. If `--dev <name>` is provided:
+   - Look for `.onboard/profiles/<normalized-name>.json`.
+   - If not found, create a new profile at that path from `templates/profile.json`.
+   - If the legacy `.onboard/profile.json` exists and contains a matching `developer.name`, migrate it to `.onboard/profiles/<normalized-name>.json` and delete the legacy file.
+
+2. If `--dev` is **not** provided:
+   - Count profiles in `.onboard/profiles/`.
+   - **Zero profiles:** also check for legacy `.onboard/profile.json`. If found, use it. If not, create `.onboard/profiles/developer.json` with default values and inform: "Profile created for 'developer'. Use `--dev <your-name>` to personalize."
+   - **One profile:** use it automatically and display: "Using profile: [developer name]."
+   - **Multiple profiles:** list them and ask the developer to re-run with `--dev <name>`:
+
+```text
+⚠ Multiple developer profiles found. Please specify one:
+
+  /onboard start --dev "[name 1]"
+  /onboard start --dev "[name 2]"
+  /onboard start --dev "[name 3]"
+```
+
+**Profile path used by all other commands:** every command and hook in this extension must follow the same resolution logic above when reading or writing the profile. The resolved path is referred to as the "active profile" throughout these instructions.
+
+### Step 3 — Create or update the active profile
+
+- **If the profile does not exist:** create it from `templates/profile.json` and fill in:
   - `developer.name` → value of `--dev` (default: `"developer"`)
   - `developer.level` → value of `--level` (default: `"junior"`)
   - `developer.onboarded_at` → current ISO8601 timestamp
@@ -45,9 +81,9 @@ Check whether `.onboard/profile.json` already exists.
 
 - **If it already exists:** update only `developer.name` and `developer.level` if the parameters were explicitly provided. Preserve all progress history. Update `last_updated`.
 
-### Step 3 — Generate the guide `.onboard/guide.md`
+### Step 4 — Generate the guide `.onboard/guide.md`
 
-Generate the file `.onboard/guide.md` with the sections below. Use language calibrated to the profile `level`:
+Generate `.onboard/guide.md` with the sections below. Use language calibrated to the profile `level`:
 
 - `junior`: accessible language, analogies, explains SDD terms on first use, full glossary
 - `mid`: direct technical language, focuses on practical consequences
@@ -110,14 +146,14 @@ Omit this section for `senior` level.
 
 Table with each installed extension and what it concretely does during the development cycle.
 
-### Step 4 — Terminal output
+### Step 5 — Terminal output
 
 Display the following summary:
 
 ```text
 ✦ onboard — guide generated at .onboard/guide.md
 
-  Project: [project name]
+  Project: [project name]  |  Developer: [name]
   Open features: N  |  Pending tasks: N  |  Extensions: N
 
   Recommended next steps:
@@ -136,3 +172,4 @@ Display the following summary:
 2. **Don't repeat what the dev already knows.** If the profile already existed, mention only what is new since the last onboarding.
 3. **End with an action.** The terminal output always suggests a concrete next step.
 4. **All generated files go inside `.onboard/`.** Never create files outside that directory.
+5. **Multi-developer safety.** Never overwrite another developer's profile. Always resolve the active profile before writing.

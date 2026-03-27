@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.0 — 2026-03-26
+
+- **Interactive quiz mode**: new `after-explain` hook suggests `/onboard quiz` automatically at the right moment (after reading ≥ 3 artifacts, after reading all specs of a feature, or after 7 days since last quiz) — no need to type the command manually
+- **Question history**: `quiz_questions_history[]` added to the profile (schema v2.0); every question asked is persisted with artifact + topic fingerprint, guaranteeing no question is ever repeated across sessions
+- **Multi-developer support**: `/onboard start` now creates per-developer profiles at `.onboard/profiles/<name>.json`; all commands resolve the active profile by name; legacy `profile.json` is migrated automatically; prompts to select a profile when multiple exist and `--dev` is not specified
+- Profile schema bumped to v2.0: new fields `quiz_questions_history`, `implementation_attempts`, `last_mentor_suggestion`, `last_quiz_nudge`
+
 ## 1.2.0 — 2026-03-26
 
 - New command `/onboard team`: aggregated view of all developer profiles in `.onboard/`; supports single and multi-profile layouts
