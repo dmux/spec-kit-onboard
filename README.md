@@ -45,6 +45,70 @@ Each developer gets an isolated profile at `.onboard/profiles/<name>.json`. Runn
 
 ---
 
+## Example output
+
+### `start` — personalized guide
+
+```text
+✦ onboard — guide generated at .onboard/guide.md
+
+  Project: payments-api  |  Developer: Ana
+  Open features: 3  |  Pending tasks: 11  |  Extensions: 4
+
+  Recommended next steps:
+    1. Read .onboard/guide.md for the full context
+    2. Run /onboard trail auth to see dependencies
+    3. Run /onboard quiz when you feel ready
+
+  Tip: use /onboard explain <file> at any time.
+```
+
+### `quiz` — adaptive questions
+
+```text
+✦ quiz — 5 questions about the project
+
+  Question 1/5
+  ─────────────────────────────────────────
+  According to features/auth/tasks.md, which task must be
+  completed before T-004 (JWT refresh flow) can start?
+
+  (a) T-001 — DB schema migration
+  (b) T-002 — password hashing setup
+  (c) T-003 — login endpoint
+  (d) T-005 — session cleanup hook
+
+  Your answer: c
+
+  ✓ Correct. T-004 lists T-003 in its depends-on field
+    (features/auth/tasks.md, task T-004).
+```
+
+### `mentor` — next task briefing
+
+```text
+✦ mentor — suggested next task
+
+  T-003 · Login endpoint  [features/auth]
+  ──────────────────────────────────────────
+  What to do: implement the POST /auth/login route — validate
+  credentials against the users table and return a signed JWT.
+
+  Read before starting:
+    - features/auth/spec.md — acceptance criteria for the login flow
+    - features/auth/tasks.md — T-003 dependencies and expected output
+
+  Watch out for:
+    - The spec requires returning 401 (not 403) for invalid credentials
+    - The after-implement hook will trigger cleanup and verify extensions
+
+  When done, run: /onboard badge
+
+Would you like me to expand on any aspect before you start?
+```
+
+---
+
 ## Workflow
 
 ```mermaid
