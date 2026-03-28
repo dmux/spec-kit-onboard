@@ -29,17 +29,28 @@ flowchart TD
 
 ## Installation
 
-Add to your project's `.speckit/extensions.json`:
+```bash
+specify extension add onboard
+```
 
-```json
-{
-  "extensions": [
-    {
-      "id": "onboard",
-      "path": "path/to/spec-kit-onboard"
-    }
-  ]
-}
+That's it. The extension is listed in the [spec-kit community catalog](https://github.com/github/spec-kit?tab=readme-ov-file#-community-extensions) and installed via the `specify` CLI.
+
+### Verify
+
+```bash
+specify extension list
+```
+
+### Install a specific version
+
+```bash
+specify extension add --from https://github.com/dmux/spec-kit-onboard/archive/refs/tags/v2.1.0.zip
+```
+
+### For local development
+
+```bash
+specify extension add --dev /path/to/spec-kit-onboard
 ```
 
 ---
