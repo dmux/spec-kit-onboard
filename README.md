@@ -9,6 +9,40 @@
 
 `onboard` guides developers from their first contact with a project to full autonomy — orienting before action, validating understanding, and suggesting the next step.
 
+## Features
+
+### Personalized onboarding guide
+
+`/onboard start` reads all project artifacts (`memory.md`, specs, tasks, installed extensions) and generates a guide at `.onboard/guide.md` tailored to the developer's declared level. `junior` gets analogies and a full glossary; `mid` gets practical focus; `senior` gets dense, decision-oriented context.
+
+### Multi-developer support
+
+Each developer gets an isolated profile at `.onboard/profiles/<name>.json`. Running `/onboard start --dev "Maria" --level mid` creates or resumes Maria's profile without touching anyone else's history. Legacy single-profile setups are automatically migrated.
+
+### Contextual explanations
+
+`/onboard explain` accepts any target — a file path, a feature name, or an SDD concept — and explains it in language calibrated to the developer's level, citing the actual artifacts in the project.
+
+### Dependency trail
+
+`/onboard trail` generates a visual Mermaid map of a feature's tasks, blockers, hooks that will fire, and extensions involved. Saved to `.onboard/trails/<feature>.md`.
+
+### Adaptive quiz
+
+`/onboard quiz` generates 5 questions from the project's real artifacts — no generic definitions, no repeated questions across sessions. Questions are distributed across verifiable facts, simple inferences, and practical consequences. Level-calibrated: multiple choice for juniors, open answers for seniors.
+
+### Smart task mentor
+
+`/onboard mentor` scores all eligible open tasks using a weighted algorithm (level fit, natural progression, quiz gaps, already-read artifacts) and suggests the single best next task with a full briefing. Integrates with Jira and Azure DevOps when those extensions are installed.
+
+### Progress and badges
+
+9 badges track meaningful milestones — from `first-read` to `autonomous` (completing a full feature without needing `/onboard explain`). `/onboard badge` shows earned badges, locked ones, and partial progress toward each.
+
+### Team visibility
+
+`/onboard team` displays an overview of all developer profiles in the project. `--report` exports a full breakdown to `.onboard/team-report.md`, including features with no coverage and quiz gap analysis per developer.
+
 ---
 
 ## Workflow
