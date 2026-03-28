@@ -1,5 +1,10 @@
 # spec-kit-onboard
 
+[![Version](https://img.shields.io/badge/version-2.1.0-blue)](https://github.com/dmux/spec-kit-onboard/releases)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![spec-kit](https://img.shields.io/badge/spec--kit-%3E%3D0.1.0-orange)](https://github.com/github/spec-kit)
+[![Community Extension](https://img.shields.io/badge/spec--kit-community%20extension-purple)](https://github.com/github/spec-kit?tab=readme-ov-file#-community-extensions)
+
 > spec-kit extension for contextual onboarding and progressive developer growth.
 
 `onboard` guides developers from their first contact with a project to full autonomy — orienting before action, validating understanding, and suggesting the next step.
