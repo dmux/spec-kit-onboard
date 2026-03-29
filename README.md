@@ -1,5 +1,7 @@
 # spec-kit-onboard
 
+![banner](banner.png)
+
 [![Version](https://img.shields.io/badge/version-2.1.0-blue)](https://github.com/dmux/spec-kit-onboard/releases)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![spec-kit](https://img.shields.io/badge/spec--kit-%3E%3D0.1.0-orange)](https://github.com/github/spec-kit)
